@@ -316,5 +316,5 @@ function codex() {
 
   dequeue(colors);
 
-  setInterval(_ => changePhase(phase), 99);
+  setInterval(_ => changePhase(phase), 666);
 }
