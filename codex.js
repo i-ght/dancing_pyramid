@@ -229,7 +229,7 @@ function fillGridSpace(
 
 
 
-function advance(spiral) {
+function turn(spiral) {
 
   const [i, ii, iii, iv] = spiral;
 
@@ -279,7 +279,7 @@ function changePhase(phase) {
     fill(x, y, dequeue(colors));
   }
   
-  advance(spiral);
+  turn(spiral);
   if (phase.index++ >= 16) {
     phase.index = 0;
     dequeue(colors);
