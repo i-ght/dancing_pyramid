@@ -100,7 +100,7 @@ const PHI = 1.618033;
 */
 
 
-function dequeue(selections) {
+function rotate(selections) {
   const ret = selections.shift();
   selections.push(ret);
   return ret;
@@ -237,7 +237,7 @@ function turn(spiral) {
     i[AXIS.X] = 3;
     if (i[AXIS.Y]++ >= 4){ 
       i[AXIS.Y] = 1;
-      dequeue(colors);
+      rotate(colors);
     }
   }
 
@@ -245,7 +245,7 @@ function turn(spiral) {
     ii[AXIS.Y] = 4;
     if (ii[AXIS.X]-- <= -4) {
       ii[AXIS.X] = -1;
-      dequeue(colors); 
+      rotate(colors); 
     } 
   }
  
@@ -253,7 +253,7 @@ function turn(spiral) {
     iii[AXIS.X] = -4;
     if (iii[AXIS.Y]-- <= -3) {
       iii[AXIS.Y] = 0;
-      dequeue(colors); 
+      rotate(colors); 
     }
   } 
 
@@ -261,7 +261,7 @@ function turn(spiral) {
     iv[AXIS.Y] = -3;
     if (iv[AXIS.X]++ >= 3) {
       iv[AXIS.X] = 0;
-      dequeue(colors); 
+      rotate(colors); 
     } 
   }
 
@@ -275,17 +275,20 @@ function changePhase(phase) {
   const fill = (x, y, color) =>
     fillGridSpace(gfx, x, y, spaceUnit, color);
 
-  for (const [x, y] of spiral) {
-    fill(x, y, dequeue(colors));
-  }
+  for (let i = 0; i < 64; i++) {
+    for (const [x, y] of spiral) {
+      fill(x, y, rotate(colors));
+    }
+    
+    turn(spiral);
+    if (phase.index++ >= 16) {
+      phase.index = 0;
+      rotate(colors);
+    }
   
-  turn(spiral);
-  if (phase.index++ >= 16) {
-    phase.index = 0;
-    dequeue(colors);
+    /* requestAnimationFrame(_ => changePhase(phase)); */
   }
 
-  /* requestAnimationFrame(_ => changePhase(phase)); */
 }
 
 function codex() {
@@ -308,13 +311,13 @@ function codex() {
   const phase = {gfx, cartesianGrid, spaceUnit, spiral, index: 0};
 
   for (const quad of cartesianGrid) {
-    const color = dequeue(colors);
+    const color = rotate(colors);
     for (const [x, y] of quad) {
       fillGridSpace(gfx, x, y, spaceUnit, color);
     }
   }
 
-  dequeue(colors);
+  rotate(colors);
 
-  setInterval(_ => changePhase(phase), 666);
+  setInterval(_ => changePhase(phase), 1000/4);
 }
