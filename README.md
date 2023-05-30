@@ -1,1 +1,1 @@
-[See](https://i-ght.github.io/dancing_pyramid/codex.html)
+[See](https://i-ght.github.io/windmill/codex.html)
