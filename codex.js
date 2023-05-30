@@ -319,5 +319,5 @@ function codex() {
 
   rotate(colors);
 
-  setInterval(_ => changePhase(phase), 1000/4);
+  setInterval(_ => changePhase(phase), 99);
 }
