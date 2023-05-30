@@ -285,8 +285,7 @@ function changePhase(phase) {
       phase.index = 0;
       rotate(colors);
     }
-  
-    /* requestAnimationFrame(_ => changePhase(phase)); */
+
   }
 
 }
